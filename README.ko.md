@@ -9,12 +9,12 @@
 
 ## Apache ShardingSphere
 
-| 기여 | 해결한 문제와 결과 | 범위와 검증 근거 |
-|---|---|---|
-| [**#38449: Sharding index 이름 정확성과 호환성**](https://github.com/apache/shardingsphere/pull/38449) | 단순한 문자열 길이 문제처럼 보였지만 실제로는 기존 physical 이름과 logical metadata를 연결하는 호환성 문제였습니다. 안전한 경우 legacy 이름을 유지하고, 필요한 경우 deterministic length-safe fallback을 사용하며, DDL rewrite·metadata revision·pipeline·신규 `CREATE TABLE` 경로에서 logical 이름을 복원하도록 개선했습니다. | **36 files** · **12 commits** · **maintainer change request 5회** · **checks 87건 통과** |
-| [**#38659: PostgreSQL/openGauss window aggregate cardinality**](https://github.com/apache/shardingsphere/pull/38659) | Parser에서 사라진 `OVER` 정보가 merge 계층의 잘못된 aggregate 1행으로 나타났습니다. Parser와 binder에서 window semantics를 보존해 empty input의 결과를 잘못된 **`NULL` 1행에서 올바른 0행**으로 수정했습니다. | Parser → binder → merge regression · **10 files** · **2 dialects** · **checks 79건 통과** |
-| [**#38405: Correlated subquery planner 정확성**](https://github.com/apache/shardingsphere/pull/38405) | Correlated outer reference가 이를 처리할 수 없는 `LogicalScan` 안으로 pushdown되는 것을 막았습니다. Correlation이 없는 기존 project pushdown은 그대로 유지했습니다. | **Targeted tests 114개** · MySQL/PostgreSQL/openGauss shared E2E · **checks 141건 통과** |
-| [**#38327: HASH_MOD upgrade 호환성**](https://github.com/apache/shardingsphere/pull/38327) | 같은 음수 값도 `Integer`, `Long`, `BigInteger` 표현에 따라 다른 shard로 갈 수 있었습니다. Numeric normalization을 opt-in으로 추가하고 legacy routing을 기본값으로 유지해 upgrade 후 기존 데이터의 shard 위치가 바뀌는 위험을 피했습니다. | Legacy/normalized mode · boundary/out-of-range coverage · **checks 82건 통과** |
+| 기여와 해결 결과 | 범위와 검증 근거 |
+|---|---|
+| [**#38449: Sharding index 이름 정확성과 호환성**](https://github.com/apache/shardingsphere/pull/38449)<br><br>문자열 길이 문제가 metadata identity와 호환성 문제로 이어졌습니다. 안전한 경우 legacy physical 이름을 유지하고, 필요한 경우 deterministic length-safe fallback을 사용하며, 신규 `CREATE TABLE`을 포함한 DDL rewrite와 metadata refresh 경로에서 logical 이름을 복원하도록 개선했습니다. | **36 files**<br>**12 commits**<br>**maintainer change request 5회**<br>**checks 87건 통과** |
+| [**#38659: PostgreSQL/openGauss window aggregate cardinality**](https://github.com/apache/shardingsphere/pull/38659)<br><br>사라진 `OVER` 정보 때문에 merge 계층이 잘못된 aggregate 1행을 만들었습니다. Parser와 binder에서 window semantics를 보존해 empty input의 결과를 잘못된 **`NULL` 1행에서 올바른 0행**으로 수정했습니다. | Parser → binder → merge regression<br>**10 files** · **2 dialects**<br>**checks 79건 통과** |
+| [**#38405: Correlated subquery planner 정확성**](https://github.com/apache/shardingsphere/pull/38405)<br><br>Correlated outer reference가 `LogicalScan` 안으로 pushdown되는 것을 막고, correlation이 없는 정상적인 project pushdown은 유지했습니다. | **Targeted tests 114개**<br>MySQL/PostgreSQL/openGauss shared E2E<br>**checks 141건 통과** |
+| [**#38327: HASH_MOD upgrade 호환성**](https://github.com/apache/shardingsphere/pull/38327)<br><br>같은 음수 값을 `Integer`, `Long`, `BigInteger`로 표현할 때의 normalization을 opt-in으로 추가하고, upgrade 후 기존 데이터의 shard 위치가 바뀌지 않도록 legacy routing을 기본값으로 유지했습니다. | Legacy/normalized mode<br>Boundary/out-of-range coverage<br>**checks 82건 통과** |
 
 [Apache ShardingSphere 병합 PR 10건 전체 보기](./SHARDINGSPHERE_CONTRIBUTIONS.ko.md)
 
