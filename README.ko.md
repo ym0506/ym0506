@@ -11,7 +11,7 @@ Apache ShardingSphere의 SQL 엔진을 개선하고, 실행 회귀를 CI에서 �
 
 **인덱스 이름 — 이름 생성·호환성 개선** · [#38449](https://github.com/apache/shardingsphere/pull/38449)<br>
 **범위: 변경 파일 36개.** DDL 재작성·메타데이터 갱신·pipeline 경로의 구현과 테스트를 포함합니다.<br>
-**결과: PostgreSQL 회귀 예제에서 85 → 63 UTF-8 바이트.** 길이 제약을 충족하는 이름 생성과 논리 이름 복원을 구현하고, 제약 안에 드는 기존 물리 이름은 유지했습니다.
+**결과: PostgreSQL 회귀 예제에서 85 → 63 UTF-8 바이트.** DB 식별자 길이 제한을 충족하고 논리 이름을 복원하도록 개선했으며, 제한 안에 드는 기존 물리 이름은 유지했습니다.
 
 **HASH_MOD — 선택적으로 활성화하는 라우팅 기능 추가** · [#38327](https://github.com/apache/shardingsphere/pull/38327)<br>
 **숫자 타입 3종: Integer·Long·BigInteger.** 부호 있는 32비트 정수 범위의 같은 값이 타입에 관계없이 같은 shard로 가도록 정규화를 추가하고, 업그레이드 호환성을 위해 기존 라우팅을 기본값으로 유지했습니다.

@@ -11,7 +11,7 @@ I contribute SQL engine enhancements to Apache ShardingSphere and build **RouteC
 
 **Index naming — compatibility enhancement** · [#38449](https://github.com/apache/shardingsphere/pull/38449)<br>
 **Scope: 36 changed files**, covering implementation and tests across DDL rewriting, metadata refresh, and pipeline paths.<br>
-**Result: 85 → 63 UTF-8 bytes** in a PostgreSQL regression fixture. Added length-safe naming and logical-name recovery while retaining legacy physical names when they fit.
+**Result: 85 → 63 UTF-8 bytes** in a PostgreSQL regression fixture, meeting the database identifier limit. Preserved legacy physical names when safe and enabled logical-name recovery.
 
 **HASH_MOD — new opt-in routing feature** · [#38327](https://github.com/apache/shardingsphere/pull/38327)<br>
 **3 numeric types:** Integer, Long, and BigInteger. Added consistent routing for equal values in the signed 32-bit integer range, while keeping legacy routing as the default for upgrades.
