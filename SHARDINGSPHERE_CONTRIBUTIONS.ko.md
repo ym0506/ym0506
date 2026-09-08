@@ -1,44 +1,60 @@
 # Apache ShardingSphere 기여
 
-[English](./SHARDINGSPHERE_CONTRIBUTIONS.md) · [프로필로 돌아가기](./README.ko.md)
+[English](./SHARDINGSPHERE_CONTRIBUTIONS.md) · [프로필로 돌아가기](./README.md)
 
-2026-08-31 기준 **병합 PR 10건**: production code 수정·개선 6건, CI 신뢰성 개선 1건, 회귀 검증 1건, 문서·release note 2건입니다.
+**ShardingSphere 병합 PR 10건:** 런타임 코드 개선 6건, CI 개선 1건, 회귀 테스트 1건, 문서 2건입니다. go-mysql-server 1건을 포함한 외부 오픈소스 병합은 **총 11건**입니다. 상태 확인: 2026-09-08.
 
-## Production Code
+## 대표 기여
 
-| PR | 문제와 해결 결과 | 근거 |
+### 인덱스 이름의 길이 제약과 논리 이름 복원
+
+샤딩 과정에서 길어진 인덱스 이름이 DB의 식별자 제약을 초과하는 문제를 해결했습니다. 기존 이름이 제약 안에 들어가면 유지하고, 초과하면 결정적인 해시 접미사와 UTF-8 바이트 단위 절단을 적용했습니다. [PR #38449](https://github.com/apache/shardingsphere/pull/38449)
+
+이름 생성 이후의 메타데이터 복원도 함께 처리했습니다. 새 테이블은 기존 논리 메타데이터가 없으므로 `CREATE TABLE` 문에서 이름 후보를 얻고, 실제 생성 규칙과 일치하는 후보로 원래 논리 이름을 복원합니다. 이 경로를 SQL 재작성·메타데이터 갱신·파이프라인에 연결했습니다.
+
+**PostgreSQL 회귀 예제: 85 → 63 UTF-8 바이트.** 같은 테스트 입력에 기존 생성 공식을 적용하면 85바이트이며, 개선된 결과는 63바이트로 검증됩니다. 특정 인덱스 이름의 길이 비교입니다. [입력과 결과 assertion](https://github.com/apache/shardingsphere/blob/b41c843dfefe41038851d83db5b1e2a47ca88b39/infra/common/src/test/java/org/apache/shardingsphere/infra/metadata/database/schema/util/IndexMetaDataUtilsTest.java#L120-L125)
+
+### 빈 입력에서 잘못 생성되던 NULL 행 수정
+
+PostgreSQL·openGauss의 윈도 집계가 빈 샤딩 입력에 대해 **NULL 1행을 반환하던 오류를 올바른 0행으로 수정**했습니다. [PR #38659](https://github.com/apache/shardingsphere/pull/38659)
+
+원인은 파서에서 유실된 `OVER` 정보였습니다. 이 정보가 사라지면 binder가 윈도 집계를 일반 집계로 분류하고, 결과 병합 단계가 합성 행을 만들었습니다. 파서·바인더의 정보 전달을 수정하고, 열 이름과 빈 결과 병합까지 회귀 검증했습니다.
+
+### 상관 서브쿼리의 잘못된 실행 계획 수정
+
+SQL Federation에서 외부 쿼리의 열을 참조하는 `IN` 서브쿼리가 컴파일에 실패하는 문제를 해결했습니다. 상관 참조를 포함한 식이 scan 내부로 잘못 내려가는 지점을 찾아 차단했습니다. [PR #38405](https://github.com/apache/shardingsphere/pull/38405)
+
+중첩된 식의 외부 참조까지 검사하며, 일반 projection의 기존 pushdown은 유지합니다. 규칙 단위·컴파일 통합 검증과 MySQL/PostgreSQL/openGauss를 대상으로 하는 SQL E2E 사례를 추가했습니다.
+
+## 병합된 ShardingSphere PR 전체
+
+| 분류 | PR | 결과 |
 |---|---|---|
-| [#38187: PostgreSQL scalar subquery table extraction에서 unary `NOT` 보존](https://github.com/apache/shardingsphere/pull/38187) | Unary `NOT`이 common expression으로 처리되면서 nested sharding table이 extraction과 rewrite에서 누락될 수 있었습니다. `NotExpression`으로 보존하고, 처음의 넓은 조건이 `IS NOT`에 영향을 주지 않도록 범위를 좁혔습니다. | 2 files · PostgreSQL parser IT 1,147개 통과 보고 · checks 148건 |
-| [#38223: MySQL constraint metadata를 schema 범위로 제한](https://github.com/apache/shardingsphere/pull/38223) | `KEY_COLUMN_USAGE` 조회에 `TABLE_SCHEMA = ?`를 추가해 metadata refresh가 관계없는 schema까지 조회하지 않도록 했습니다. | 2 files · checks 148건 |
-| [#38327: Upgrade-safe HASH_MOD numeric normalization](https://github.com/apache/shardingsphere/pull/38327) | 같은 음수 값도 `Integer`, `Long`, `BigInteger`에 따라 다른 shard로 갈 수 있었습니다. Normalization을 opt-in으로 추가하고 legacy routing을 기본값으로 유지했으며 integer boundary와 범위 밖 값을 검증했습니다. | 6 files · checks 82건 |
-| [#38405: SQL Federation project pushdown의 correlation guard](https://github.com/apache/shardingsphere/pull/38405) | Correlated expression이 `LogicalScan` 안으로 pushdown되는 것을 막고 정상적인 non-correlated pushdown은 유지했습니다. | Targeted tests 114개 · MySQL/PostgreSQL/openGauss E2E · checks 141건 |
-| [#38449: Generated sharding index 이름의 length-safety와 recovery](https://github.com/apache/shardingsphere/pull/38449) | Legacy-first deterministic naming과 candidate로 검증하는 logical-name recovery를 rewrite와 metadata lifecycle 전반에 적용했습니다. | 36 files · +1,383/-74 · 12 commits · change request 5회 · checks 87건 |
-| [#38659: Window aggregate의 empty-input cardinality 보존](https://github.com/apache/shardingsphere/pull/38659) | PostgreSQL/openGauss의 `OVER` 정보를 parser와 binder에서 보존해 입력 0행의 window aggregate가 합성된 `NULL` 1행이 아닌 0행을 반환하도록 했습니다. | 10 files · parser/binder/merge regression · checks 79건 |
+| 런타임 | [#38449](https://github.com/apache/shardingsphere/pull/38449) | 인덱스 이름 길이 제약 충족과 논리 메타데이터 복원 |
+| 런타임 | [#38659](https://github.com/apache/shardingsphere/pull/38659) | PostgreSQL/openGauss 윈도 집계의 빈 결과 정확성 회복 |
+| 런타임 | [#38405](https://github.com/apache/shardingsphere/pull/38405) | 상관 IN 서브쿼리의 잘못된 projection pushdown 방지 |
+| 런타임 | [#38327](https://github.com/apache/shardingsphere/pull/38327) | 선택형 HASH_MOD 정규화로 Integer·Long·BigInteger **3종**의 정수 범위 동일 값 라우팅 일치. 기존 동작은 기본값으로 유지 |
+| 런타임 | [#38187](https://github.com/apache/shardingsphere/pull/38187) | PostgreSQL 단항 NOT을 AST에 보존해 내부 서브쿼리의 샤딩 테이블 추출 가능 |
+| 런타임 | [#38223](https://github.com/apache/shardingsphere/pull/38223) | MySQL 제약 메타데이터 조회에 TABLE_SCHEMA 조건 추가 |
+| CI | [#38352](https://github.com/apache/shardingsphere/pull/38352) | 후속 E2E 작업에서 동일 소스 스냅샷 재사용, 불필요한 docs 제외 |
+| 회귀 테스트 | [#38685](https://github.com/apache/shardingsphere/pull/38685) | 암호화 규칙 삭제·동일 이름 재생성·삭제 후 DML 검증. 런타임 코드 변경 없음 |
+| 문서 | [#38206](https://github.com/apache/shardingsphere/pull/38206) | DistSQL 3개 명령의 영어·중국어 문서 **6페이지** 추가 |
+| 문서 | [#39535](https://github.com/apache/shardingsphere/pull/39535) | 타인이 구현한 Cartesian routing 수정의 릴리스 노트 누락 보완 |
 
-## CI 신뢰성
+**CI 정량 사례:** #38352에서 새 소스 아카이브의 불필요한 docs를 제외해 로컬 비교 크기가 **약 109MB → 5.1MB, 약 95% 축소**됐습니다. 원 수치가 근삿값인 아카이브 크기 비교이며, CI 실행 시간·실패율 개선률은 측정하지 않았습니다. [공개 비교 기록과 명령](https://github.com/apache/shardingsphere/pull/38352#issuecomment-4011386704)
 
-| PR | 문제와 해결 결과 | 근거 |
-|---|---|---|
-| [#38352: E2E-SQL job에서 하나의 source snapshot 재사용](https://github.com/apache/shardingsphere/pull/38352) | Downstream job이 사라질 수 있는 synthetic PR merge ref를 늦게 checkout하던 구조를, 한 번 만든 source snapshot을 matrix job이 재사용하는 구조로 바꿨습니다. 불필요한 `docs/`를 제외해 로컬 측정 archive가 약 109MB에서 5.1MB로 줄었습니다. | Workflow 1 file · local archive 95.3% 감소 · checks 89건 통과/2건 skip |
+## 다른 프로젝트의 병합 기여
 
-95.3%는 archive 크기 측정값이며 workflow 실행시간이나 실패율이 같은 비율로 개선되었다는 주장이 아닙니다.
+**go-mysql-server:** 시스템 변수 숫자 타입 **4종**에 `NumberType`을 구현해 숫자 타입 판별과 인터페이스 호환성을 개선했습니다. 컴파일 시 인터페이스 검증과 숫자·문자열 타입 판별 검증을 추가했습니다. [병합 PR #3442](https://github.com/dolthub/go-mysql-server/pull/3442)
 
-## 회귀 검증
+## 조사·검토 중인 기여
 
-| PR | 문제와 해결 결과 | 근거 |
-|---|---|---|
-| [#38685: Encrypt rule drop 이후 recreate와 runtime behavior 검증](https://github.com/apache/shardingsphere/pull/38685) | Named rule-item 삭제, 같은 이름으로 recreate, `LOAD SINGLE TABLE`, drop 이후 DML rewrite behavior를 검증했습니다. Production code를 변경하지 않은 test-only 기여입니다. | 5 files · approval 전 maintainer change request 4회 · checks 64건 통과/2건 skip |
+다음 항목은 위의 병합 11건과 별도로 진행 중입니다.
 
-## 문서와 Release 완전성
+| 항목 | 현재 상태와 범위 |
+|---|---|
+| [ShardingSphere #39763](https://github.com/apache/shardingsphere/issues/39763) · [PR #39764](https://github.com/apache/shardingsphere/pull/39764) | hook 수명주기 조사 중 compatibility fallback의 종료 callback 누락을 단위 테스트로 재현. 수정 PR 제출, **미병합** |
+| [ShardingSphere #39765](https://github.com/apache/shardingsphere/issues/39765) | Agent의 겹친 JDBC 실행에서 span 손실을 재현·보고. 통제된 재현 조건의 결과이며 **이슈 OPEN** |
+| [OpenTelemetry instrumentation #20020](https://github.com/open-telemetry/opentelemetry-java-instrumentation/pull/20020) | OpenTelemetryDriver의 JDBC query sanitization 설정 반영 수정 제출, **미병합** |
 
-| PR | 결과 | 근거 |
-|---|---|---|
-| [#38206: 누락된 DistSQL RAL 문서 추가](https://github.com/apache/shardingsphere/pull/38206) | `EXPORT METADATA`, `IMPORT METADATA`, `EXPORT STORAGE NODES`의 영문·중문 syntax page를 추가했습니다. | 6 pages · 344 added lines |
-| [#39535: Cartesian routing fix를 5.5.4 release note에 추가](https://github.com/apache/shardingsphere/pull/39535) | 이미 merge된 routing correction의 누락된 release-note entry를 추가했습니다. | Release-note 1 line · checks 4건 |
-
-## 수치 해석 원칙
-
-- File과 commit 수는 변경 범위의 근거이며 사용자 영향 수치가 아닙니다.
-- Check 수는 test-case 수가 아니라 GitHub check run 수입니다.
-- Targeted test 수는 명시된 검증 명령의 범위이며 전체 프로젝트 test suite 수가 아닙니다.
-- 직접 측정하지 않은 사용자 수, production incident 감소율, latency 또는 throughput 개선은 주장하지 않습니다.
+RouteContract를 개발하며 관측 경로의 가정을 점검하고, 발견한 문제를 독립 재현과 함께 upstream에 전달하고 있습니다.
