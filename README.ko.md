@@ -7,14 +7,14 @@ Apache ShardingSphere의 SQL 엔진을 개선하고, 실행 회귀를 CI에서 �
 
 ## Apache ShardingSphere — 병합 PR 10건
 
-**런타임 코드 개선 6건** · CI 개선 1건 · 회귀 테스트 PR 1건 · 문서 PR 2건.
+**런타임 코드 개선 6건**과 CI·회귀 테스트·문서 기여가 포함됩니다.
 
-**인덱스 이름 — 여러 모듈에 걸친 엔진 개선** · [#38449](https://github.com/apache/shardingsphere/pull/38449)<br>
+**인덱스 이름 — 이름 생성·호환성 개선** · [#38449](https://github.com/apache/shardingsphere/pull/38449)<br>
 **범위: 변경 파일 36개.** DDL 재작성·메타데이터 갱신·pipeline 경로의 구현과 테스트를 포함합니다.<br>
 **결과: PostgreSQL 회귀 예제에서 85 → 63 UTF-8 바이트.** 길이 제약을 충족하는 이름 생성과 논리 이름 복원을 구현하고, 제약 안에 드는 기존 물리 이름은 유지했습니다.
 
 **HASH_MOD — 선택적으로 활성화하는 라우팅 기능 추가** · [#38327](https://github.com/apache/shardingsphere/pull/38327)<br>
-**숫자 타입 3종: Integer·Long·BigInteger.** 정수 범위의 같은 값이 타입에 관계없이 같은 shard로 가도록 정규화를 추가하고, 업그레이드 호환성을 위해 기존 라우팅을 기본값으로 유지했습니다.
+**숫자 타입 3종: Integer·Long·BigInteger.** 부호 있는 32비트 정수 범위의 같은 값이 타입에 관계없이 같은 shard로 가도록 정규화를 추가하고, 업그레이드 호환성을 위해 기존 라우팅을 기본값으로 유지했습니다.
 
 **윈도 집계 — SQL 결과 정확성 수정** · [#38659](https://github.com/apache/shardingsphere/pull/38659)<br>
 **SQL 방언 2종 · 잘못된 NULL 1행 → 올바른 0행.** PostgreSQL·openGauss의 윈도 함수 정보를 parser·binder에서 보존해 빈 입력의 결과를 바로잡았습니다.

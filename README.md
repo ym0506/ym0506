@@ -7,14 +7,14 @@ I contribute SQL engine enhancements to Apache ShardingSphere and build **RouteC
 
 ## Apache ShardingSphere — 10 merged PRs
 
-**6 runtime code improvements** · 1 CI improvement · 1 regression-test PR · 2 documentation PRs.
+**6 runtime code improvements**, plus CI, regression tests, and documentation.
 
-**Index naming — engine enhancement across modules** · [#38449](https://github.com/apache/shardingsphere/pull/38449)<br>
+**Index naming — compatibility enhancement** · [#38449](https://github.com/apache/shardingsphere/pull/38449)<br>
 **Scope: 36 changed files**, covering implementation and tests across DDL rewriting, metadata refresh, and pipeline paths.<br>
 **Result: 85 → 63 UTF-8 bytes** in a PostgreSQL regression fixture. Added length-safe naming and logical-name recovery while retaining legacy physical names when they fit.
 
 **HASH_MOD — new opt-in routing feature** · [#38327](https://github.com/apache/shardingsphere/pull/38327)<br>
-**3 numeric types:** Integer, Long, and BigInteger. Added consistent routing for equal values within the integer range, while keeping legacy routing as the default for upgrades.
+**3 numeric types:** Integer, Long, and BigInteger. Added consistent routing for equal values in the signed 32-bit integer range, while keeping legacy routing as the default for upgrades.
 
 **Window aggregates — SQL correctness fix** · [#38659](https://github.com/apache/shardingsphere/pull/38659)<br>
 **2 SQL dialects · 1 incorrect NULL row → 0 rows.** Preserved PostgreSQL/openGauss window semantics through parser and binder paths to restore correct empty-input results.
