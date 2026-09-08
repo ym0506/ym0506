@@ -1,6 +1,6 @@
 # Apache ShardingSphere Contributions
 
-[한국어](./SHARDINGSPHERE_CONTRIBUTIONS.ko.md) · [Back to profile](./README.en.md)
+[한국어](./SHARDINGSPHERE_CONTRIBUTIONS.ko.md) · [Back to profile](./README.md)
 
 **10 merged ShardingSphere PRs:** six runtime code improvements, one CI improvement, one regression-test contribution, and two documentation changes. With one contribution to go-mysql-server, **11 external open-source PRs are merged**. Status checked: 2026-09-08.
 

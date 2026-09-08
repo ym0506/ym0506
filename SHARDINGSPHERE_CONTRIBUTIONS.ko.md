@@ -1,6 +1,6 @@
 # Apache ShardingSphere 기여
 
-[English](./SHARDINGSPHERE_CONTRIBUTIONS.md) · [프로필로 돌아가기](./README.md)
+[English](./SHARDINGSPHERE_CONTRIBUTIONS.md) · [프로필로 돌아가기](./README.ko.md)
 
 **ShardingSphere 병합 PR 10건:** 런타임 코드 개선 6건, CI 개선 1건, 회귀 테스트 1건, 문서 2건입니다. go-mysql-server 1건을 포함한 외부 오픈소스 병합은 **총 11건**입니다. 상태 확인: 2026-09-08.
 
