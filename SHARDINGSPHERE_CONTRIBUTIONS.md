@@ -10,6 +10,8 @@
 
 Fixed generated sharding index names that could exceed database identifier limits. Existing names are retained when they fit; longer names use deterministic hash suffixes and truncation within a UTF-8 byte budget. [PR #38449](https://github.com/apache/shardingsphere/pull/38449)
 
+**Engineering scope: 36 changed files — 23 production Java files and 13 tests or test resources.** The change spans DDL rewriting, metadata refresh, and pipeline paths. These counts describe implementation scope, while the fixture below demonstrates the corrected behavior. [Changed files](https://github.com/apache/shardingsphere/pull/38449/files)
+
 The change also handles metadata recovery after name generation. A newly created table has no existing logical metadata, so the implementation derives name candidates from the parsed `CREATE TABLE` statement and verifies them against the generation rules. Recovery is carried through SQL rewriting, metadata refresh, and pipeline paths.
 
 **PostgreSQL regression example: 85 → 63 UTF-8 bytes.** Applying the old naming formula to the same test input produces 85 bytes; the updated result is asserted at 63 bytes. This measures the length of one fixture's index name. [Fixture and result assertion](https://github.com/apache/shardingsphere/blob/b41c843dfefe41038851d83db5b1e2a47ca88b39/infra/common/src/test/java/org/apache/shardingsphere/infra/metadata/database/schema/util/IndexMetaDataUtilsTest.java#L120-L125)
@@ -40,6 +42,8 @@ Nested expressions are checked for outer references while ordinary projection pu
 | Regression tests | [#38685](https://github.com/apache/shardingsphere/pull/38685) | Covered encrypt-rule deletion, same-name recreation, and post-drop DML. No runtime code changes |
 | Documentation | [#38206](https://github.com/apache/shardingsphere/pull/38206) | Added **six pages** covering three DistSQL commands in English and Chinese |
 | Documentation | [#39535](https://github.com/apache/shardingsphere/pull/39535) | Added the missing release note for another contributor's Cartesian routing fix |
+
+## CI archive size
 
 **CI measurement:** In #38352, excluding unused docs from the newly introduced source archive reduced its locally compared size from **about 109 MB to 5.1 MB, approximately 95%**. These are approximate archive-size measurements; workflow duration and failure-rate improvements were not measured. [Public comparison and command](https://github.com/apache/shardingsphere/pull/38352#issuecomment-4011386704)
 

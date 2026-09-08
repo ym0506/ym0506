@@ -10,6 +10,8 @@
 
 샤딩 과정에서 길어진 인덱스 이름이 DB의 식별자 제약을 초과하는 문제를 해결했습니다. 기존 이름이 제약 안에 들어가면 유지하고, 초과하면 결정적인 해시 접미사와 UTF-8 바이트 단위 절단을 적용했습니다. [PR #38449](https://github.com/apache/shardingsphere/pull/38449)
 
+**구현 범위: 변경 파일 36개 = 실행 Java 코드 23개 + 테스트·테스트 리소스 13개.** DDL 재작성·메타데이터 갱신·pipeline 경로에 걸친 변경입니다. 파일 수는 구현 범위를, 아래 회귀 예제는 실제 수정된 동작을 보여 줍니다. [변경 파일](https://github.com/apache/shardingsphere/pull/38449/files)
+
 이름 생성 이후의 메타데이터 복원도 함께 처리했습니다. 새 테이블은 기존 논리 메타데이터가 없으므로 `CREATE TABLE` 문에서 이름 후보를 얻고, 실제 생성 규칙과 일치하는 후보로 원래 논리 이름을 복원합니다. 이 경로를 SQL 재작성·메타데이터 갱신·파이프라인에 연결했습니다.
 
 **PostgreSQL 회귀 예제: 85 → 63 UTF-8 바이트.** 같은 테스트 입력에 기존 생성 공식을 적용하면 85바이트이며, 개선된 결과는 63바이트로 검증됩니다. 특정 인덱스 이름의 길이 비교입니다. [입력과 결과 assertion](https://github.com/apache/shardingsphere/blob/b41c843dfefe41038851d83db5b1e2a47ca88b39/infra/common/src/test/java/org/apache/shardingsphere/infra/metadata/database/schema/util/IndexMetaDataUtilsTest.java#L120-L125)
@@ -40,6 +42,8 @@ SQL Federation에서 외부 쿼리의 열을 참조하는 `IN` 서브쿼리가 �
 | 회귀 테스트 | [#38685](https://github.com/apache/shardingsphere/pull/38685) | 암호화 규칙 삭제·동일 이름 재생성·삭제 후 DML 검증. 런타임 코드 변경 없음 |
 | 문서 | [#38206](https://github.com/apache/shardingsphere/pull/38206) | DistSQL 3개 명령의 영어·중국어 문서 **6페이지** 추가 |
 | 문서 | [#39535](https://github.com/apache/shardingsphere/pull/39535) | 타인이 구현한 Cartesian routing 수정의 릴리스 노트 누락 보완 |
+
+## CI 아카이브 크기
 
 **CI 정량 사례:** #38352에서 새 소스 아카이브의 불필요한 docs를 제외해 로컬 비교 크기가 **약 109MB → 5.1MB, 약 95% 축소**됐습니다. 원 수치가 근삿값인 아카이브 크기 비교이며, CI 실행 시간·실패율 개선률은 측정하지 않았습니다. [공개 비교 기록과 명령](https://github.com/apache/shardingsphere/pull/38352#issuecomment-4011386704)
 
