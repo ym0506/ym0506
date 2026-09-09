@@ -6,6 +6,10 @@
 
 RouteContract captures physical JDBC execution attempts reported by ShardingSphere-JDBC's `SQLExecutionHook` for a named application operation and compares them with a reviewed manifest. It adds execution budgets, data-source checks, and rewritten-SQL structure checks alongside existing business-result assertions, with Markdown and JSON review reports.
 
+[Explore the example in 20 seconds](https://routecontract.ym56.chatgpt.site), then
+[run the real MySQL demo on GitHub](https://github.com/ym0506/routecontract/blob/main/docs/first-project.md#try-in-your-browser).
+The interactive explanation illustrates a recorded fixture; the GitHub workflow runs the database test.
+
 ## Same result, different execution
 
 | Fixed real-MySQL fixture | Approved query | Changed query |
@@ -17,6 +21,21 @@ RouteContract captures physical JDBC execution attempts reported by ShardingSphe
 Both queries pass the existing result assertion. RouteContract fails CI when the change exceeds the declared attempt or data-source budget. Intentional changes require a person to review the diff and update the approved baseline. The `1→2` result demonstrates regression detection, not a performance improvement. [Public consumer verification](https://github.com/ym0506/routecontract/blob/961c4baab5c6b690fdad997ed70806c82e2ede8b/docs/evidence/release-0.1.3-central.md#public-consumer-verification)
 
 [Recorded manifests](https://github.com/ym0506/routecontract/tree/f1efd71e32078dd5812268a1ad24ee73110ff61f/examples/manifests) · [Example CI report](https://github.com/ym0506/routecontract/blob/f1efd71e32078dd5812268a1ad24ee73110ff61f/docs/evidence/ci-review-report-example.md)
+
+## Application code, isolated experiments
+
+Three experiments use selected code from public projects with RouteContract 0.1.3
+and synthetic data. Each asks which execution property the test needs to check.
+
+| Project inputs | Observation | Testing decision |
+| --- | --- | --- |
+| Egon-COLA routing classes and rules | Same row and one attempt; the observed data-source alias changes. Reordering the map and restoring it both match. | Compare source identity when counts cannot express the requirement. |
+| SCG mapper, entity and configuration | Two existing queries return the same order with one versus eight observed attempts. | Choose a budget per operation; a difference alone does not establish a regression. |
+| CityPulse existing integration test | One patched test passes; its final lookup reports two attempts across one observed alias. | Add capture alongside existing result assertions; no application baseline was approved. |
+
+These are author-run evaluations, not independently completed integrations or
+production results. The Java 21 and PostgreSQL observations cover only the recorded
+paths and dependency graphs. [Source revisions, commands, raw observations and limits](https://github.com/ym0506/routecontract/blob/657f14817f59aa76cb9e2c546f2acb72dc780305/docs/application-evaluations.md).
 
 ## Verified results
 

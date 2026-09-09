@@ -28,8 +28,8 @@ Also: [correlated-query planner fix](https://github.com/apache/shardingsphere/pu
 
 - **Regression detected:** a real-MySQL fixture keeps the same business result while observed JDBC execution attempts increase **1 → 2**. RouteContract rejects the change against the reviewed baseline in CI.
 - **Library features:** operation capture, execution budgets, rewritten-SQL checks, and Markdown/JSON review reports.
-- **Verified results:** **62 Java/MySQL tests passed at v0.1.3**; **160 captures = 8 fixed cases × 20 repetitions** with one structural signature per case.
+- **Application evaluations:** used code from three public projects in synthetic database experiments to check changed destinations with equal execution counts, different query budgets, and capture inside an existing test. [Scope and reproductions](./ROUTECONTRACT.md#application-code-isolated-experiments).
 
-[Install](https://github.com/ym0506/routecontract#install-013) · [Report example](https://github.com/ym0506/routecontract/blob/main/docs/evidence/ci-review-report-example.md) · [Test conditions and evidence](./ROUTECONTRACT.md)
+[20-second explanation](https://routecontract.ym56.chatgpt.site) · [Run the MySQL demo on GitHub](https://github.com/ym0506/routecontract/blob/main/docs/first-project.md#try-in-your-browser) · [Install](https://github.com/ym0506/routecontract#install-013) · [Test conditions and evidence](./ROUTECONTRACT.md)
 
 <sub>Supported: Java 17 · exact ShardingSphere-JDBC 5.5.3 · synchronous, non-batch PreparedStatement. Execution counts are hook-reported attempts in controlled fixtures. Status checked: 2026-09-08.</sub>
