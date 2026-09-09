@@ -16,7 +16,7 @@ RouteContract captures physical JDBC execution attempts reported by ShardingSphe
 
 Both queries pass the existing result assertion. RouteContract fails CI when the change exceeds the declared attempt or data-source budget. Intentional changes require a person to review the diff and update the approved baseline. The `1→2` result demonstrates regression detection, not a performance improvement. [Public consumer verification](https://github.com/ym0506/routecontract/blob/961c4baab5c6b690fdad997ed70806c82e2ede8b/docs/evidence/release-0.1.3-central.md#public-consumer-verification)
 
-[2m 54s demo](https://www.youtube.com/watch?v=pcgvNNxd1mM) · [Recorded manifests](https://github.com/ym0506/routecontract/tree/f1efd71e32078dd5812268a1ad24ee73110ff61f/examples/manifests) · [Example CI report](https://github.com/ym0506/routecontract/blob/f1efd71e32078dd5812268a1ad24ee73110ff61f/docs/evidence/ci-review-report-example.md)
+[Recorded manifests](https://github.com/ym0506/routecontract/tree/f1efd71e32078dd5812268a1ad24ee73110ff61f/examples/manifests) · [Example CI report](https://github.com/ym0506/routecontract/blob/f1efd71e32078dd5812268a1ad24ee73110ff61f/docs/evidence/ci-review-report-example.md)
 
 ## Verified results
 

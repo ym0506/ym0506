@@ -30,6 +30,6 @@ Also: [correlated-query planner fix](https://github.com/apache/shardingsphere/pu
 - **Library features:** operation capture, execution budgets, rewritten-SQL checks, and Markdown/JSON review reports.
 - **Verified results:** **62 Java/MySQL tests passed at v0.1.3**; **160 captures = 8 fixed cases × 20 repetitions** with one structural signature per case.
 
-[Install](https://github.com/ym0506/routecontract#install-013) · [2m 54s demo](https://www.youtube.com/watch?v=pcgvNNxd1mM) · [Report example](https://github.com/ym0506/routecontract/blob/main/docs/evidence/ci-review-report-example.md) · [Test conditions and evidence](./ROUTECONTRACT.md)
+[Install](https://github.com/ym0506/routecontract#install-013) · [Report example](https://github.com/ym0506/routecontract/blob/main/docs/evidence/ci-review-report-example.md) · [Test conditions and evidence](./ROUTECONTRACT.md)
 
 <sub>Supported: Java 17 · exact ShardingSphere-JDBC 5.5.3 · synchronous, non-batch PreparedStatement. Execution counts are hook-reported attempts in controlled fixtures. Status checked: 2026-09-08.</sub>

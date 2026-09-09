@@ -18,7 +18,7 @@ ShardingSphere-JDBC의 `SQLExecutionHook`이 보고한 물리 JDBC 실행 시도
 
 기존 결과 assertion은 두 조회를 모두 통과시킵니다. RouteContract는 선언한 실행 시도·데이터 소스 예산을 넘는 변경을 CI에서 거부합니다. 실행 증가가 의도된 변경이면 담당자가 diff를 검토해 승인본을 갱신합니다. [공개 소비자 검증](https://github.com/ym0506/routecontract/blob/961c4baab5c6b690fdad997ed70806c82e2ede8b/docs/evidence/release-0.1.3-central.md#public-consumer-verification)
 
-[2분 54초 데모](https://www.youtube.com/watch?v=pcgvNNxd1mM) · [실제 manifest](https://github.com/ym0506/routecontract/tree/f1efd71e32078dd5812268a1ad24ee73110ff61f/examples/manifests) · [CI 리포트 예시](https://github.com/ym0506/routecontract/blob/f1efd71e32078dd5812268a1ad24ee73110ff61f/docs/evidence/ci-review-report-example.md)
+[실제 manifest](https://github.com/ym0506/routecontract/tree/f1efd71e32078dd5812268a1ad24ee73110ff61f/examples/manifests) · [CI 리포트 예시](https://github.com/ym0506/routecontract/blob/f1efd71e32078dd5812268a1ad24ee73110ff61f/docs/evidence/ci-review-report-example.md)
 
 ## 검증 수치
 
