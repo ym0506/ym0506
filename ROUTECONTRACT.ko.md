@@ -6,6 +6,10 @@
 
 ShardingSphere-JDBC의 `SQLExecutionHook`이 보고한 물리 JDBC 실행 시도를 operation별로 수집하고, 사람이 승인한 manifest와 비교합니다. 기존 업무 결과 assertion에 실행 예산·데이터 소스·rewritten-SQL 구조 검사를 더하고, 변경 내용을 Markdown·JSON 리포트로 제공합니다.
 
+[20초 인터랙티브 설명 · English](https://routecontract.ym56.chatgpt.site)에서 예제를 살펴보고,
+[GitHub에서 실제 MySQL 시연](https://github.com/ym0506/routecontract/blob/main/docs/first-project.ko.md#브라우저에서-체험하기)을 실행할 수 있습니다.
+설명 페이지는 기록된 예제를 보여 주며, 데이터베이스 테스트는 GitHub 워크플로에서 실행합니다.
+
 > RouteContract checks hook-reported physical JDBC execution attempts against reviewed contracts in CI. Its real-MySQL fixture retains the business result while attempts increase from 1 to 2. These figures demonstrate regression detection, not a performance improvement.
 
 ## 같은 결과, 달라진 실행
@@ -19,6 +23,21 @@ ShardingSphere-JDBC의 `SQLExecutionHook`이 보고한 물리 JDBC 실행 시도
 기존 결과 assertion은 두 조회를 모두 통과시킵니다. RouteContract는 선언한 실행 시도·데이터 소스 예산을 넘는 변경을 CI에서 거부합니다. 실행 증가가 의도된 변경이면 담당자가 diff를 검토해 승인본을 갱신합니다. [공개 소비자 검증](https://github.com/ym0506/routecontract/blob/961c4baab5c6b690fdad997ed70806c82e2ede8b/docs/evidence/release-0.1.3-central.md#public-consumer-verification)
 
 [실제 manifest](https://github.com/ym0506/routecontract/tree/f1efd71e32078dd5812268a1ad24ee73110ff61f/examples/manifests) · [CI 리포트 예시](https://github.com/ym0506/routecontract/blob/f1efd71e32078dd5812268a1ad24ee73110ff61f/docs/evidence/ci-review-report-example.md)
+
+## 애플리케이션 코드를 사용한 격리 실험
+
+공개 프로젝트 세 곳의 일부 코드와 합성 데이터를 RouteContract 0.1.3으로 실행했습니다.
+각 실험에서 어떤 실행 속성을 검사해야 하는지 확인했습니다.
+
+| 사용한 프로젝트 코드 | 관측 결과 | 테스트에서 판단할 점 |
+| --- | --- | --- |
+| Egon-COLA 라우팅 클래스와 규칙 | 같은 행·실행 시도 1회를 유지하면서 관측 데이터 소스가 바뀜. 설정 항목 순서 변경과 원복은 일치. | 횟수만으로 요구를 표현할 수 없으면 데이터 소스 식별자를 비교합니다. |
+| SCG mapper·엔티티·설정 | 기존 조회 두 개가 같은 주문을 반환하면서 실행 시도는 1회와 8회. | operation별 예산을 정합니다. 차이가 있다는 이유만으로 회귀라고 판단하지 않습니다. |
+| CityPulse 기존 통합 테스트 | 수정한 테스트 한 개 통과. 마지막 조회에서 실행 시도 2회·관측 데이터 소스 1개. | 기존 결과 assertion에 capture를 추가했습니다. 애플리케이션 기준값을 승인한 것은 아닙니다. |
+
+모두 작성자 측의 자체 평가이며 독립적인 도입·운영 실적이 아닙니다. Java 21·PostgreSQL
+관측은 기록된 실행 경로와 의존성 조합에 한정됩니다.
+[고정된 소스·재현 명령·원시 관측·한계](https://github.com/ym0506/routecontract/blob/657f14817f59aa76cb9e2c546f2acb72dc780305/docs/application-evaluations.ko.md)를 함께 공개했습니다.
 
 ## 검증 수치
 
