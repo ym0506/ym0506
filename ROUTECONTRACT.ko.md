@@ -6,9 +6,7 @@
 
 ShardingSphere-JDBC의 `SQLExecutionHook`이 보고한 물리 JDBC 실행 시도를 operation별로 수집하고, 사람이 승인한 manifest와 비교합니다. 기존 업무 결과 assertion에 실행 예산·데이터 소스·rewritten-SQL 구조 검사를 더하고, 변경 내용을 Markdown·JSON 리포트로 제공합니다.
 
-[20초 인터랙티브 설명 · English](https://routecontract.ym56.chatgpt.site)에서 예제를 살펴보고,
-[GitHub에서 실제 MySQL 시연](https://github.com/ym0506/routecontract/blob/main/docs/first-project.ko.md#브라우저에서-체험하기)을 실행할 수 있습니다.
-설명 페이지는 기록된 예제를 보여 주며, 데이터베이스 테스트는 GitHub 워크플로에서 실행합니다.
+[GitHub에서 실제 MySQL 시연](https://github.com/ym0506/routecontract/blob/main/docs/first-project.ko.md#브라우저에서-체험하기)을 실행할 수 있습니다. Fork한 저장소의 워크플로에서 데이터베이스 테스트를 실행합니다.
 
 > RouteContract checks hook-reported physical JDBC execution attempts against reviewed contracts in CI. Its real-MySQL fixture retains the business result while attempts increase from 1 to 2. These figures demonstrate regression detection, not a performance improvement.
 
