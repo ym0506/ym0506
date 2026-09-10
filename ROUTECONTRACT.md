@@ -6,9 +6,7 @@
 
 RouteContract captures physical JDBC execution attempts reported by ShardingSphere-JDBC's `SQLExecutionHook` for a named application operation and compares them with a reviewed manifest. It adds execution budgets, data-source checks, and rewritten-SQL structure checks alongside existing business-result assertions, with Markdown and JSON review reports.
 
-[Explore the example in 20 seconds](https://routecontract.ym56.chatgpt.site), then
-[run the real MySQL demo on GitHub](https://github.com/ym0506/routecontract/blob/main/docs/first-project.md#try-in-your-browser).
-The interactive explanation illustrates a recorded fixture; the GitHub workflow runs the database test.
+[Run the real MySQL demo on GitHub](https://github.com/ym0506/routecontract/blob/main/docs/first-project.md#try-in-your-browser). The workflow runs the database test in your fork.
 
 ## Same result, different execution
 

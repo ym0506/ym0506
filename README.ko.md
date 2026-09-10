@@ -30,6 +30,6 @@ Apache ShardingSphere의 SQL 엔진을 개선하고, 실행 회귀를 CI에서 �
 - **라이브러리 기능:** operation별 수집, 실행 예산, 재작성 SQL 검사, Markdown·JSON 검토 리포트.
 - **애플리케이션 실험:** 공개 프로젝트 세 곳의 일부 코드를 합성 데이터베이스에서 실행해, 횟수가 같은 데이터 소스 변경·조회별 실행 예산 차이·기존 테스트에 capture 추가를 확인했습니다. [범위와 재현 근거](./ROUTECONTRACT.ko.md#애플리케이션-코드를-사용한-격리-실험).
 
-[20초 설명 · English](https://routecontract.ym56.chatgpt.site) · [GitHub에서 MySQL 시연 실행](https://github.com/ym0506/routecontract/blob/main/docs/first-project.ko.md#브라우저에서-체험하기) · [설치](https://github.com/ym0506/routecontract#install-013) · [검증 조건과 근거](./ROUTECONTRACT.ko.md)
+[GitHub에서 MySQL 시연 실행](https://github.com/ym0506/routecontract/blob/main/docs/first-project.ko.md#브라우저에서-체험하기) · [설치](https://github.com/ym0506/routecontract#install-013) · [검증 조건과 근거](./ROUTECONTRACT.ko.md)
 
 <sub>지원: Java 17 · 정확히 ShardingSphere-JDBC 5.5.3 · 동기식·비배치 PreparedStatement. 실행 횟수는 통제된 예제에서 hook으로 관측한 실행 시도입니다. 상태 확인: 2026-09-08.</sub>
