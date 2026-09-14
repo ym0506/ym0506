@@ -10,7 +10,7 @@ Fixed generated names exceeding database limits and restored logical-name recove
 **Same value, different shard** · Opt-in routing feature · [#38327](https://github.com/apache/shardingsphere/pull/38327)<br>
 Added HASH_MOD normalization so equal signed 32-bit integer values route consistently across **Integer, Long, and BigInteger**. Kept legacy routing as the default for upgrade compatibility.
 
-**Missing failure notification before compatibility fallback** · Reliability fix · [#39764](https://github.com/apache/shardingsphere/pull/39764)<br>
+**Missing failure notification before compatibility fallback** · Reliability fix · [Issue #39763](https://github.com/apache/shardingsphere/issues/39763) → [Merged PR #39764](https://github.com/apache/shardingsphere/pull/39764)<br>
 While auditing execution hooks for RouteContract, fixed a missing SQL failure notification before a compatibility fallback. Regression tests verify preserved return values and exactly one failure notification in **trunk and worker paths**.
 
 [All 11 PRs and design decisions](./SHARDINGSPHERE_CONTRIBUTIONS.md)

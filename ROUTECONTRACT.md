@@ -60,7 +60,7 @@ RouteContract packages **operation correlation → data-minimized manifests → 
 
 ## From a hook audit to a merged upstream fix
 
-Checking the execution information used by RouteContract led to a ShardingSphere defect: a compatibility result could be returned without notifying hooks of the SQL execution failure. I submitted a regression and a fix that preserves existing return values while reporting failure; [PR #39764 was merged](https://github.com/apache/shardingsphere/pull/39764).
+Checking the execution information used by RouteContract led to a ShardingSphere defect: a compatibility result could be returned without notifying hooks of the SQL execution failure. I [reported the defect in issue #39763](https://github.com/apache/shardingsphere/issues/39763) and submitted a regression test and a fix that preserves existing return values while reporting failure; [PR #39764 was merged](https://github.com/apache/shardingsphere/pull/39764).
 
 The change is one callback relocation plus regression coverage for two execution paths. [Implementation scope, review, and verification](./SHARDINGSPHERE_CONTRIBUTIONS.md#failure-notification-before-compatibility-fallback).
 

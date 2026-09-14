@@ -60,7 +60,7 @@ RouteContract는 **작업별 수집 → 최소 정보만 담은 실행 기록 �
 
 ## 실행 훅 점검에서 의존 라이브러리 수정까지
 
-RouteContract가 수집하는 실행 정보를 점검하다, 호환용 결과를 반환하면서 SQL 실행 실패를 훅에 알리지 않는 ShardingSphere 결함을 발견했습니다. 기존 반환값을 유지하면서 실패를 알리도록 회귀 테스트와 수정안을 제출했고, [PR #39764가 병합됐습니다](https://github.com/apache/shardingsphere/pull/39764).
+RouteContract가 수집하는 실행 정보를 점검하다, 호환용 결과를 반환하면서 SQL 실행 실패를 훅에 알리지 않는 ShardingSphere 결함을 발견했습니다. [이슈 #39763으로 결함을 보고](https://github.com/apache/shardingsphere/issues/39763)하고, 기존 반환값을 유지하면서 실패를 알리도록 회귀 테스트와 수정안을 제출했습니다. [PR #39764는 병합됐습니다](https://github.com/apache/shardingsphere/pull/39764).
 
 기존 콜백 호출 하나의 위치를 옮기고 두 실행 경로의 회귀 테스트를 보강한 작업입니다. [구현 범위·검토·검증 근거](./SHARDINGSPHERE_CONTRIBUTIONS.ko.md#호환용-결과를-반환할-때-누락되던-sql-실패-알림).
 
