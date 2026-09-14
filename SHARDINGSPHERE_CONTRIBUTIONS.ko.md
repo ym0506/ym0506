@@ -1,8 +1,8 @@
 # Apache ShardingSphere 기여
 
-[English](./SHARDINGSPHERE_CONTRIBUTIONS.md) · [프로필로 돌아가기](./README.ko.md)
+[English](./SHARDINGSPHERE_CONTRIBUTIONS.md) · [프로필로 돌아가기](./README.ko.md) · [전체 오픈소스 기여](./CONTRIBUTIONS.ko.md)
 
-**ShardingSphere 병합 PR 10건:** 런타임 코드 개선 6건, CI 개선 1건, 회귀 테스트 1건, 문서 2건입니다. go-mysql-server 1건을 포함한 외부 오픈소스 병합은 **총 11건**입니다. 상태 확인: 2026-09-08.
+**ShardingSphere 병합 PR 10건:** 런타임 코드 개선 6건, CI 개선 1건, 회귀 테스트 1건, 문서 2건입니다. OpenTelemetry와 go-mysql-server를 포함한 외부 오픈소스 병합은 **[총 12건](./CONTRIBUTIONS.ko.md)**입니다. 상태 확인: 2026-09-14.
 
 ## 대표 기여
 
@@ -53,12 +53,11 @@ SQL Federation에서 외부 쿼리의 열을 참조하는 `IN` 서브쿼리가 �
 
 ## 조사·검토 중인 기여
 
-다음 항목은 위의 병합 11건과 별도로 진행 중입니다.
+다음 항목은 병합 PR과 별도로 진행 중입니다.
 
 | 항목 | 현재 상태와 범위 |
 |---|---|
 | [ShardingSphere #39763](https://github.com/apache/shardingsphere/issues/39763) · [PR #39764](https://github.com/apache/shardingsphere/pull/39764) | hook 수명주기 조사 중 compatibility fallback의 종료 callback 누락을 단위 테스트로 재현. 수정 PR 제출, **미병합** |
 | [ShardingSphere #39765](https://github.com/apache/shardingsphere/issues/39765) | Agent의 겹친 JDBC 실행에서 span 손실을 재현·보고. 통제된 재현 조건의 결과이며 **이슈 OPEN** |
-| [OpenTelemetry instrumentation #20020](https://github.com/open-telemetry/opentelemetry-java-instrumentation/pull/20020) | OpenTelemetryDriver의 JDBC query sanitization 설정 반영 수정 제출, **미병합** |
 
 RouteContract를 개발하며 관측 경로의 가정을 점검하고, 발견한 문제를 독립 재현과 함께 upstream에 전달하고 있습니다.

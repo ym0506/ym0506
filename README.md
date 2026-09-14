@@ -1,35 +1,43 @@
-# Java · SQL Engines · Developer Tools
+# Java · SQL correctness · Observability
 
-I contribute SQL engine enhancements to Apache ShardingSphere and build **RouteContract**, a Java library for catching execution regressions in CI.
+Contributor to **Apache ShardingSphere** and **OpenTelemetry**. Author of **RouteContract**, a Java library that catches database execution regressions even when query results stay unchanged.
 
-**[11 merged upstream PRs](./SHARDINGSPHERE_CONTRIBUTIONS.md)** · **[RouteContract on Maven Central](./ROUTECONTRACT.md)**<br>
-[한국어](./README.ko.md)
+**[12 merged upstream PRs across 3 projects](./CONTRIBUTIONS.md)** · **[RouteContract on Maven Central](./ROUTECONTRACT.md)**<br>
+[한국어](./README.ko.md) · [SQL engine work](#apache-shardingsphere) · [OpenTelemetry](#opentelemetry-java-instrumentation) · [RouteContract](#routecontract)
 
-## Apache ShardingSphere — 10 merged PRs
+## Apache ShardingSphere
 
-**6 runtime code improvements**, plus CI, regression tests, and documentation.
+**10 merged PRs · 6 runtime improvements**, plus CI, regression tests, and documentation.
 
 **Index naming — compatibility enhancement** · [#38449](https://github.com/apache/shardingsphere/pull/38449)<br>
-**Scope: 36 changed files**, covering implementation and tests across DDL rewriting, metadata refresh, and pipeline paths.<br>
-**Result: 85 → 63 UTF-8 bytes** in a PostgreSQL regression fixture, meeting the database identifier limit. Preserved legacy physical names when safe and enabled logical-name recovery.
+Fixed generated names that exceeded database identifier limits, including logical-name recovery and preservation of existing names when safe. **Scope: 36 files** across DDL rewriting, metadata refresh, pipeline paths, and tests. A PostgreSQL regression fixture now meets the limit: **85 → 63 UTF-8 bytes**.
 
 **HASH_MOD — new opt-in routing feature** · [#38327](https://github.com/apache/shardingsphere/pull/38327)<br>
-**3 numeric types:** Integer, Long, and BigInteger. Added consistent routing for equal values in the signed 32-bit integer range, while keeping legacy routing as the default for upgrades.
+Made equal signed 32-bit integer values route consistently across **3 types: Integer, Long, and BigInteger**. Kept legacy routing as the default to preserve upgrade compatibility.
 
 **Window aggregates — SQL correctness fix** · [#38659](https://github.com/apache/shardingsphere/pull/38659)<br>
-**2 SQL dialects · 1 incorrect NULL row → 0 rows.** Preserved PostgreSQL/openGauss window semantics through parser and binder paths to restore correct empty-input results.
+Restored correct empty-input results in **2 dialects, PostgreSQL and openGauss: 1 incorrect NULL row → 0 rows**, by preserving window metadata through parser and binder paths.
 
-Also: [correlated-query planner fix](https://github.com/apache/shardingsphere/pull/38405) · [CI archive: ~109 → 5.1 MB in a local comparison](./SHARDINGSPHERE_CONTRIBUTIONS.md#ci-archive-size)<br>
-[All contributions, scope, and evidence](./SHARDINGSPHERE_CONTRIBUTIONS.md) — includes a merged four-type compatibility improvement in go-mysql-server.
+[All 10 PRs, design decisions, and evidence](./SHARDINGSPHERE_CONTRIBUTIONS.md)
 
-## RouteContract — SQL execution regression checks
+## OpenTelemetry Java instrumentation
 
-**Published Java library · v0.1.3 · Maven Central**
+**1 merged PR · JDBC configuration correctness** · [#20020](https://github.com/open-telemetry/opentelemetry-java-instrumentation/pull/20020)
 
-- **Regression detected:** a real-MySQL fixture keeps the same business result while observed JDBC execution attempts increase **1 → 2**. RouteContract rejects the change against the reviewed baseline in CI.
-- **Library features:** operation capture, execution budgets, rewritten-SQL checks, and Markdown/JSON review reports.
-- **Application evaluations:** used code from three public projects in synthetic database experiments to check changed destinations with equal execution counts, different query budgets, and capture inside an existing test. [Scope and reproductions](./ROUTECONTRACT.md#application-code-isolated-experiments).
+Fixed ignored query-sanitization settings in `OpenTelemetryDriver`, so SQL recorded in spans follows the configured masking behavior. JDBC-specific settings now override common defaults. Added **16 H2 regression cases** that check real query results and recorded SQL through Statement and PreparedStatement.
 
-[Run the MySQL demo on GitHub](https://github.com/ym0506/routecontract/blob/main/docs/first-project.md#try-in-your-browser) · [Install](https://github.com/ym0506/routecontract#install-013) · [Test conditions and evidence](./ROUTECONTRACT.md)
+[Implementation, regression coverage, and maintainer approval](./OPENTELEMETRY_CONTRIBUTIONS.md)
 
-<sub>Supported: Java 17 · exact ShardingSphere-JDBC 5.5.3 · synchronous, non-batch PreparedStatement. Execution counts are hook-reported attempts in controlled fixtures. Status checked: 2026-09-08.</sub>
+## RouteContract
+
+**Java library author · v0.1.4 on Maven Central**
+
+**Same query result, different database execution.** In a real-MySQL fixture, observed JDBC execution attempts increase **1 → 2** while the business result stays unchanged. RouteContract rejects the change against a reviewed baseline in CI.
+
+- **Built:** operation capture, execution budgets, data-source and rewritten-SQL checks, and Markdown/JSON review reports.
+- **Verified:** **64 release source tests passed**; public-artifact consumer checks cover **Java 17/21 × Gradle/Maven**.
+- **Explored:** selected code from **3 public projects** in isolated, author-run database experiments. [Results and scope](./ROUTECONTRACT.md#application-code-isolated-experiments).
+
+[Run the MySQL demo](https://github.com/ym0506/routecontract/blob/main/docs/first-project.md#try-in-your-browser) · [Install](https://github.com/ym0506/routecontract#install-014) · [Evidence](./ROUTECONTRACT.md)
+
+<sub>RouteContract: exact ShardingSphere-JDBC 5.5.3; synchronous, non-batch PreparedStatement. Attempt counts describe hook observations in controlled fixtures. Status checked: 2026-09-14.</sub>

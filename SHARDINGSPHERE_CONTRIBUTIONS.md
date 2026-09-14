@@ -1,8 +1,8 @@
 # Apache ShardingSphere Contributions
 
-[한국어](./SHARDINGSPHERE_CONTRIBUTIONS.ko.md) · [Back to profile](./README.md)
+[한국어](./SHARDINGSPHERE_CONTRIBUTIONS.ko.md) · [Back to profile](./README.md) · [All open source contributions](./CONTRIBUTIONS.md)
 
-**10 merged ShardingSphere PRs:** six runtime code improvements, one CI improvement, one regression-test contribution, and two documentation changes. With one contribution to go-mysql-server, **11 external open-source PRs are merged**. Status checked: 2026-09-08.
+**10 merged ShardingSphere PRs:** six runtime code improvements, one CI improvement, one regression-test contribution, and two documentation changes. Including OpenTelemetry and go-mysql-server, **[12 upstream PRs are merged](./CONTRIBUTIONS.md)**. Status checked: 2026-09-14.
 
 ## Selected contributions
 
@@ -53,12 +53,11 @@ Nested expressions are checked for outer references while ordinary projection pu
 
 ## Investigations and proposals in progress
 
-These items are tracked separately from the 11 merged PRs above.
+These items are tracked separately from the merged PRs.
 
 | Item | Current status and scope |
 |---|---|
 | [ShardingSphere #39763](https://github.com/apache/shardingsphere/issues/39763) · [PR #39764](https://github.com/apache/shardingsphere/pull/39764) | Reproduced a missing terminal callback in a compatibility fallback while auditing hook lifecycles. Fix submitted with unit regression coverage; **unmerged** |
 | [ShardingSphere #39765](https://github.com/apache/shardingsphere/issues/39765) | Reproduced and reported Agent span loss during overlapping JDBC executions under controlled conditions; **issue open** |
-| [OpenTelemetry instrumentation #20020](https://github.com/open-telemetry/opentelemetry-java-instrumentation/pull/20020) | Submitted a fix for JDBC query sanitization settings in OpenTelemetryDriver; **unmerged** |
 
 While building RouteContract, I check assumptions in execution-observation paths and report upstream findings with independent reproductions.
