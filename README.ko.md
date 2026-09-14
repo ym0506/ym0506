@@ -1,4 +1,4 @@
-# Java · SQL 정확성 · 관측성
+# Java · SQL · 관측성
 
 **Apache ShardingSphere**와 **OpenTelemetry**에 기여합니다. 조회 결과가 여전히 맞아도 달라진 DB 실행을 검출하는 Java 라이브러리 **RouteContract**를 개발합니다.
 
