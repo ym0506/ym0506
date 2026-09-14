@@ -2,7 +2,7 @@
 
 [English](./SHARDINGSPHERE_CONTRIBUTIONS.md) · [프로필로 돌아가기](./README.ko.md) · [전체 오픈소스 기여](./CONTRIBUTIONS.ko.md)
 
-**ShardingSphere 병합 PR 10건:** 런타임 코드 개선 6건, CI 개선 1건, 회귀 테스트 1건, 문서 2건입니다. OpenTelemetry와 go-mysql-server를 포함한 외부 오픈소스 병합은 **[총 12건](./CONTRIBUTIONS.ko.md)**입니다. 상태 확인: 2026-09-14.
+**ShardingSphere 병합 PR 11건:** 런타임 코드 개선 7건, CI 개선 1건, 회귀 테스트 1건, 문서 2건입니다. OpenTelemetry와 go-mysql-server를 포함한 외부 오픈소스 병합은 **[총 13건](./CONTRIBUTIONS.ko.md)**입니다. 상태 확인: 2026-09-14.
 
 ## 대표 기여
 
@@ -28,10 +28,24 @@ SQL Federation에서 외부 쿼리의 열을 참조하는 `IN` 서브쿼리가 �
 
 중첩된 식의 외부 참조까지 검사하되 일반 프로젝션을 하위 단계로 내려보내는 기존 최적화는 유지합니다. 규칙 단위·컴파일 통합 검증과 MySQL/PostgreSQL/openGauss를 대상으로 하는 SQL E2E 사례를 추가했습니다.
 
+### 호환용 결과를 반환할 때 누락되던 SQL 실패 알림
+
+**2026년 9월 14일 병합** · [PR #39764](https://github.com/apache/shardingsphere/pull/39764)
+
+RouteContract의 `SQLExecutionHook` 종료 처리를 점검하다, JDBC 실행이 실패한 뒤 호환용 결과를 반환하면서 훅에 종료 알림을 보내지 않는 경로를 발견했습니다. `finishFailure`를 호환 처리 앞으로 옮겨 원래 SQL 예외를 전달하고, 기존 trunk·worker 반환값과 일반 예외 전파 동작은 유지했습니다. [발견 경위와 수정 전 실패 재현](https://github.com/apache/shardingsphere/issues/39763)
+
+**구현 범위: 운영 코드 1개와 테스트 1개, 총 2개 파일.** 운영 코드에서는 기존 콜백 호출의 위치를 옮겼습니다. 특정 경로의 실행 상태를 정확히 알리도록 고친 신뢰성 개선입니다.
+
+- **두 실행 경로 검증:** 기존 테스트를 trunk·worker 매개변수화 사례로 보강해 반환값, 원래 예외, 콜백 순서와 실패 알림 1회 전달을 확인했습니다. [회귀 테스트](https://github.com/apache/shardingsphere/blob/b13ad32b12ceb92868445c98dcc811dadf39ecc5/infra/executor/src/test/java/org/apache/shardingsphere/infra/executor/sql/execute/engine/driver/jdbc/JDBCExecutorCallbackTest.java#L74-L102)
+- **실행기 전체 테스트 196건 통과:** 공개 CI 기록이며 이번 회귀 사례와 기존 테스트를 포함한 수치입니다. 새 테스트 196개를 추가했다는 뜻은 아닙니다. [CI 실행](https://github.com/apache/shardingsphere/actions/runs/34171532124) · [메인테이너 승인](https://github.com/apache/shardingsphere/pull/39764#pullrequestreview-5195469387)
+
+대상은 ShardingSphere 실행기의 이종 DB 호환 처리 경로입니다. 단위 테스트로 검증했으며 별도의 실제 이종 DB·Proxy 환경 재현은 수행하지 않았습니다. RouteContract가 지원하는 ShardingSphere-JDBC 5.5.3·MySQL 환경에서도 같은 문제가 발생한다고 확인한 것은 아닙니다.
+
 ## 병합된 ShardingSphere PR 전체
 
 | 분류 | PR | 결과 |
 |---|---|---|
+| 런타임 | [#39764](https://github.com/apache/shardingsphere/pull/39764) | 호환용 결과 반환 전 SQL 실패 알림 누락 수정. 기존 trunk·worker 반환 동작 유지 |
 | 런타임 | [#38449](https://github.com/apache/shardingsphere/pull/38449) | 인덱스 이름 길이 제약 충족과 논리 메타데이터 복원 |
 | 런타임 | [#38659](https://github.com/apache/shardingsphere/pull/38659) | PostgreSQL/openGauss 윈도 집계의 빈 결과 정확성 회복 |
 | 런타임 | [#38405](https://github.com/apache/shardingsphere/pull/38405) | 상관 IN 서브쿼리에서 프로젝션을 하위 단계로 잘못 내려보내는 문제 수정 |

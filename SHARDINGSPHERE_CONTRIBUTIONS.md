@@ -2,7 +2,7 @@
 
 [한국어](./SHARDINGSPHERE_CONTRIBUTIONS.ko.md) · [Back to profile](./README.md) · [All open source contributions](./CONTRIBUTIONS.md)
 
-**10 merged ShardingSphere PRs:** six runtime code improvements, one CI improvement, one regression-test contribution, and two documentation changes. Including OpenTelemetry and go-mysql-server, **[12 upstream PRs are merged](./CONTRIBUTIONS.md)**. Status checked: 2026-09-14.
+**11 merged ShardingSphere PRs:** seven runtime code improvements, one CI improvement, one regression-test contribution, and two documentation changes. Including OpenTelemetry and go-mysql-server, **[13 upstream PRs are merged](./CONTRIBUTIONS.md)**. Status checked: 2026-09-14.
 
 ## Selected contributions
 
@@ -28,10 +28,24 @@ Fixed SQL Federation compilation failures when an `IN` subquery projects an oute
 
 Nested expressions are checked for outer references while ordinary projection pushdown remains available. Coverage includes planner-rule and compiler integration tests plus a SQL E2E fixture targeting MySQL, PostgreSQL, and openGauss.
 
+### Failure notification before compatibility fallback
+
+**Merged September 14, 2026** · [PR #39764](https://github.com/apache/shardingsphere/pull/39764)
+
+While auditing `SQLExecutionHook` completion for RouteContract, I found a path where JDBC execution failed but compatibility recovery returned a result without a terminal hook notification. Moving `finishFailure` before recovery reports the original SQL exception while preserving existing trunk/worker results and ordinary exception propagation. [Discovery and failing-before-fix reproduction](https://github.com/apache/shardingsphere/issues/39763)
+
+**Scope: 2 files — one production file and one test file.** The production change moves one existing callback; this is a targeted execution-state reliability fix.
+
+- **Two execution paths:** strengthened an existing test into trunk/worker parameterized cases that verify return values, the original exception, callback order, and exactly one failure notification. [Regression test](https://github.com/apache/shardingsphere/blob/b13ad32b12ceb92868445c98dcc811dadf39ecc5/infra/executor/src/test/java/org/apache/shardingsphere/infra/executor/sql/execute/engine/driver/jdbc/JDBCExecutorCallbackTest.java#L74-L102)
+- **196 executor-suite test executions passed** in recorded upstream CI, including the focused regression cases. This is the full suite count, not 196 new tests. [CI run](https://github.com/apache/shardingsphere/actions/runs/34171532124) · [Maintainer approval](https://github.com/apache/shardingsphere/pull/39764#pullrequestreview-5195469387)
+
+The affected path is heterogeneous-database compatibility recovery in ShardingSphere's executor. Verification is at unit-test level; a dedicated live heterogeneous Proxy/database reproduction was not run. This does not establish the same failure in RouteContract's supported ShardingSphere-JDBC 5.5.3/MySQL environment.
+
 ## All merged ShardingSphere PRs
 
 | Category | PR | Result |
 |---|---|---|
+| Runtime | [#39764](https://github.com/apache/shardingsphere/pull/39764) | Reported SQL execution failure before compatibility fallback while preserving existing trunk/worker return values |
 | Runtime | [#38449](https://github.com/apache/shardingsphere/pull/38449) | Enforced generated index-name length budgets and restored logical metadata |
 | Runtime | [#38659](https://github.com/apache/shardingsphere/pull/38659) | Restored correct empty results for PostgreSQL/openGauss window aggregates |
 | Runtime | [#38405](https://github.com/apache/shardingsphere/pull/38405) | Prevented invalid projection pushdown for correlated IN subqueries |

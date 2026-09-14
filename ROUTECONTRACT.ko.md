@@ -58,6 +58,14 @@ RouteContract는 **작업별 수집 → 최소 정보만 담은 실행 기록 �
 
 **v0.1.4 유지보수:** 실패 콜백과 캡처 종료가 겹칠 때 진단 스냅샷의 상태가 불일치하는 결함을 수정했습니다. 결과와 예외 클래스를 하나의 불변 상태로 묶어 원자적으로 갱신하고 먼저 보고된 종료 상태를 유지합니다. 새 단위 테스트로 수정 전 실패를 재현했습니다. [구현·검증 #95](https://github.com/ym0506/routecontract/pull/95)
 
+## 실행 훅 점검에서 의존 라이브러리 수정까지
+
+RouteContract가 수집하는 실행 정보를 점검하다, 호환용 결과를 반환하면서 SQL 실행 실패를 훅에 알리지 않는 ShardingSphere 결함을 발견했습니다. 기존 반환값을 유지하면서 실패를 알리도록 회귀 테스트와 수정안을 제출했고, [PR #39764가 병합됐습니다](https://github.com/apache/shardingsphere/pull/39764).
+
+기존 콜백 호출 하나의 위치를 옮기고 두 실행 경로의 회귀 테스트를 보강한 작업입니다. [구현 범위·검토·검증 근거](./SHARDINGSPHERE_CONTRIBUTIONS.ko.md#호환용-결과를-반환할-때-누락되던-sql-실패-알림).
+
+ShardingSphere의 이종 DB 호환 경로를 단위 테스트로 조사한 결과이며, RouteContract 정식 배포물의 지원 범위는 아래와 같습니다.
+
 ## 배포와 지원 범위
 
 **v0.1.4를 Maven Central에서 사용할 수 있습니다.** 의존성 좌표는 `io.github.ym0506.routecontract:routecontract-shardingsphere-5.5:0.1.4`입니다. [정식 릴리스](https://github.com/ym0506/routecontract/releases/tag/v0.1.4) · [설치](https://github.com/ym0506/routecontract#install-014) · [공개 파일·설치·실행 검증](https://github.com/ym0506/routecontract/blob/221014cb01eaa4a1be67e2a941ea665ef24f0a4b/docs/evidence/release-0.1.4-central.md)

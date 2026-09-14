@@ -2,7 +2,7 @@
 
 ## Apache ShardingSphere
 
-**SQL 실행·호환성 개선 6건 · 전체 병합 PR 10건**
+**SQL 실행·호환성 개선 7건 · 전체 병합 PR 11건**
 
 **DDL·메타데이터·파이프라인에 걸친 인덱스 이름 수정** · [#38449](https://github.com/apache/shardingsphere/pull/38449)<br>
 DB 길이 제한을 넘는 이름을 생성하는 문제와 논리 이름 복원을 함께 처리했습니다. SQL 재작성·메타데이터 갱신·파이프라인 경로를 수정하고, 제한 안에 드는 기존 이름은 유지했습니다. **구현 범위: 테스트를 포함한 36개 파일.**
@@ -10,10 +10,10 @@ DB 길이 제한을 넘는 이름을 생성하는 문제와 논리 이름 복원
 **같은 값이 다른 샤드로 가는 문제** · 선택형 라우팅 기능 추가 · [#38327](https://github.com/apache/shardingsphere/pull/38327)<br>
 부호 있는 32비트 정수 범위의 같은 값이 **Integer·Long·BigInteger**에서 같은 샤드로 가도록 HASH_MOD 정규화를 추가했습니다. 업그레이드 호환성을 위해 기존 라우팅을 기본값으로 유지했습니다.
 
-**빈 입력에서 생기는 NULL 행** · SQL 결과 수정 · [#38659](https://github.com/apache/shardingsphere/pull/38659)<br>
-파서·바인더에서 윈도 함수 정보를 보존해 **PostgreSQL·openGauss**의 빈 입력 결과를 **잘못된 NULL 1행 → 올바른 0행**으로 수정했습니다.
+**호환 처리에서 누락되던 SQL 실패 알림** · 신뢰성 개선 · [#39764](https://github.com/apache/shardingsphere/pull/39764)<br>
+RouteContract를 개발하며 실행 훅을 점검하다, 호환용 결과를 반환할 때 SQL 실패 알림이 누락되는 경로를 찾아 고쳤습니다. 회귀 테스트로 **두 실행 경로**에서 기존 반환값을 유지하고 실패 알림을 한 번만 전달하는지 확인했습니다.
 
-[전체 PR 10건과 설계 판단](./SHARDINGSPHERE_CONTRIBUTIONS.ko.md)
+[전체 PR 11건과 설계 판단](./SHARDINGSPHERE_CONTRIBUTIONS.ko.md)
 
 ## OpenTelemetry Java instrumentation
 
@@ -37,6 +37,6 @@ DB 길이 제한을 넘는 이름을 생성하는 문제와 논리 이름 복원
 
 ---
 
-[외부 프로젝트 3곳에 병합된 PR 12건 전체 보기](./CONTRIBUTIONS.ko.md) · [이메일](mailto:atat9828@naver.com)
+[외부 프로젝트 3곳에 병합된 PR 13건 전체 보기](./CONTRIBUTIONS.ko.md) · [이메일](mailto:atat9828@naver.com)
 
 <sub>기여·배포 상태 확인: 2026-09-14.</sub>

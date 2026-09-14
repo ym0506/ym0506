@@ -58,6 +58,14 @@ RouteContract packages **operation correlation → data-minimized manifests → 
 
 **v0.1.4 maintenance:** fixed inconsistent diagnostic snapshots when a failure callback overlaps capture closure. One immutable atomic state now publishes the outcome and exception class together, preserving first-terminal-wins. The new unit test reproduced the old failure before the fix. [Implementation and validation #95](https://github.com/ym0506/routecontract/pull/95)
 
+## From a hook audit to a merged upstream fix
+
+Checking the execution information used by RouteContract led to a ShardingSphere defect: a compatibility result could be returned without notifying hooks of the SQL execution failure. I submitted a regression and a fix that preserves existing return values while reporting failure; [PR #39764 was merged](https://github.com/apache/shardingsphere/pull/39764).
+
+The change is one callback relocation plus regression coverage for two execution paths. [Implementation scope, review, and verification](./SHARDINGSPHERE_CONTRIBUTIONS.md#failure-notification-before-compatibility-fallback).
+
+This was a unit-level investigation of ShardingSphere's heterogeneous compatibility path. RouteContract's released support remains the exact JDBC scope below.
+
 ## Release and supported scope
 
 **v0.1.4 is published on Maven Central:** `io.github.ym0506.routecontract:routecontract-shardingsphere-5.5:0.1.4`. [Stable release](https://github.com/ym0506/routecontract/releases/tag/v0.1.4) · [Install](https://github.com/ym0506/routecontract#install-014) · [Public files and consumer verification](https://github.com/ym0506/routecontract/blob/221014cb01eaa4a1be67e2a941ea665ef24f0a4b/docs/evidence/release-0.1.4-central.md)
