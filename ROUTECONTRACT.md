@@ -64,6 +64,5 @@ RouteContract packages **operation correlation → data-minimized manifests → 
 
 - **Supported:** Java 17/21 · exact ShardingSphere-JDBC 5.5.3 · synchronous, non-batch `PreparedStatement`.
 - **Observation boundary:** hook-reported physical JDBC execution attempts and structure. These results do not establish a complete route plan, transaction commit, latency, or production throughput.
-- **In development:** the core/adapter split in [0.2 PR #62](https://github.com/ym0506/routecontract/pull/62) is unreleased and does not extend current support.
 
 <sub>Checked: 2026-09-14. v0.1.4 source: a1eb220; public-consumer records: 221014c. Earlier 0.1.3 experiments remain labeled separately.</sub>

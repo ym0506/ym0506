@@ -20,11 +20,4 @@ The work includes **8 runtime code changes**, 1 CI improvement, 1 regression-tes
 
 File counts describe implementation scope. Byte lengths, row counts, and type counts describe specific corrected behavior; test counts describe recorded validation. Performance or production adoption is stated only when measured and evidenced.
 
-## Ongoing investigations
-
-These are separate from the 12 merged PRs.
-
-- **ShardingSphere hook lifecycle:** submitted a fix for a missing terminal callback before a compatibility fallback, with a regression that fails before the change. [PR #39764 — open](https://github.com/apache/shardingsphere/pull/39764)
-- **ShardingSphere Agent span loss:** reproduced and reported missing execute spans when JDBC callbacks overlap. [Issue #39765 — open](https://github.com/apache/shardingsphere/issues/39765)
-
 [RouteContract](./ROUTECONTRACT.md) is my separately authored and published library; its own repository PRs are excluded from the upstream total.

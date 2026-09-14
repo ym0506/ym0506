@@ -50,14 +50,3 @@ SQL Federation에서 외부 쿼리의 열을 참조하는 `IN` 서브쿼리가 �
 ## 다른 프로젝트의 병합 기여
 
 **go-mysql-server:** 시스템 변수 숫자 타입 **4종**에 `NumberType`을 구현해 숫자 타입 판별과 인터페이스 호환성을 개선했습니다. 컴파일 시 인터페이스 검증과 숫자·문자열 타입 판별 검증을 추가했습니다. [병합 PR #3442](https://github.com/dolthub/go-mysql-server/pull/3442)
-
-## 조사·검토 중인 기여
-
-다음 항목은 병합 PR과 별도로 진행 중입니다.
-
-| 항목 | 현재 상태와 범위 |
-|---|---|
-| [ShardingSphere #39763](https://github.com/apache/shardingsphere/issues/39763) · [PR #39764](https://github.com/apache/shardingsphere/pull/39764) | 훅의 수명주기를 조사하며 호환성 대체 경로의 종료 콜백 누락을 단위 테스트로 재현. 수정 PR 제출, **미병합** |
-| [ShardingSphere #39765](https://github.com/apache/shardingsphere/issues/39765) | 에이전트에서 JDBC 실행이 겹칠 때 스팬 손실을 재현·보고. 통제된 재현 조건의 결과이며 **이슈 진행 중** |
-
-RouteContract를 개발하며 관측 경로의 가정을 점검하고 발견한 문제는 별도로 재현해 원본 프로젝트에 보고하고 있습니다.

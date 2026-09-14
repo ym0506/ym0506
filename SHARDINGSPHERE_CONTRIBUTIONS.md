@@ -50,14 +50,3 @@ Nested expressions are checked for outer references while ordinary projection pu
 ## Merged contribution to another project
 
 **go-mysql-server:** Implemented `NumberType` for **four system numeric types**, improving numeric-type recognition and interface compatibility. Added compile-time interface assertions and numeric/string type-classification coverage. [Merged PR #3442](https://github.com/dolthub/go-mysql-server/pull/3442)
-
-## Investigations and proposals in progress
-
-These items are tracked separately from the merged PRs.
-
-| Item | Current status and scope |
-|---|---|
-| [ShardingSphere #39763](https://github.com/apache/shardingsphere/issues/39763) · [PR #39764](https://github.com/apache/shardingsphere/pull/39764) | Reproduced a missing terminal callback in a compatibility fallback while auditing hook lifecycles. Fix submitted with unit regression coverage; **unmerged** |
-| [ShardingSphere #39765](https://github.com/apache/shardingsphere/issues/39765) | Reproduced and reported Agent span loss during overlapping JDBC executions under controlled conditions; **issue open** |
-
-While building RouteContract, I check assumptions in execution-observation paths and report upstream findings with independent reproductions.
