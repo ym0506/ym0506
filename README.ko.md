@@ -1,5 +1,14 @@
 [English](./README.md)
 
+## Apache Fineract
+
+**코어뱅킹 · 돈 계산 정확성 · 병합 PR 1건**
+
+**원천징수 세액이 1원 덜 계산되던 문제** · [이슈 FINERACT-2988](https://issues.apache.org/jira/browse/FINERACT-2988) → [병합 PR #6731](https://github.com/apache/fineract/pull/6731)<br>
+예금 이자 원천징수와 수수료 세금을 `double`로 계산해, 정확한 값이 반올림 경계에 걸리면 1단위 적게 나왔습니다(5,250 × 1.4%: **74 → 73**, 1~1,000,000 중 187개 금액). `BigDecimal`로 정확히 계산한 뒤 한 번만 반올림하도록 고쳤습니다. **새 회귀 테스트 6개 중 5개가 수정 전 실패**했고, 메인테이너가 사례를 직접 재검증한 뒤 병합했습니다.
+
+[문제·수정·검증](./FINERACT_CONTRIBUTIONS.ko.md)
+
 ## Apache ShardingSphere
 
 **SQL 실행·호환성 개선 7건 · 전체 병합 PR 11건**
@@ -37,6 +46,6 @@ RouteContract를 개발하며 실행 훅을 점검하다, 호환용 결과를 �
 
 ---
 
-[외부 프로젝트 3곳에 병합된 PR 13건 전체 보기](./CONTRIBUTIONS.ko.md) · [이메일](mailto:atat9828@naver.com)
+[외부 프로젝트 4곳에 병합된 PR 14건 전체 보기](./CONTRIBUTIONS.ko.md) · [이메일](mailto:atat9828@naver.com)
 
-<sub>기여·배포 상태 확인: 2026-09-14.</sub>
+<sub>기여·배포 상태 확인: 2026-10-26.</sub>

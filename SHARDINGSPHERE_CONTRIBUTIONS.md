@@ -2,7 +2,7 @@
 
 [한국어](./SHARDINGSPHERE_CONTRIBUTIONS.ko.md) · [Back to profile](./README.md) · [All open source contributions](./CONTRIBUTIONS.md)
 
-**11 merged ShardingSphere PRs:** seven runtime code improvements, one CI improvement, one regression-test contribution, and two documentation changes. Including OpenTelemetry and go-mysql-server, **[13 upstream PRs are merged](./CONTRIBUTIONS.md)**. Status checked: 2026-09-14.
+**11 merged ShardingSphere PRs:** seven runtime code improvements, one CI improvement, one regression-test contribution, and two documentation changes. Including Apache Fineract, OpenTelemetry and go-mysql-server, **[14 upstream PRs are merged](./CONTRIBUTIONS.md)**. ShardingSphere status checked: 2026-09-14; total updated 2026-10-26.
 
 ## Selected contributions
 

@@ -1,5 +1,14 @@
 [한국어](./README.ko.md)
 
+## Apache Fineract
+
+**Core banking · money correctness · 1 merged PR**
+
+**Withholding tax off by one minor unit** · [Issue FINERACT-2988](https://issues.apache.org/jira/browse/FINERACT-2988) → [Merged PR #6731](https://github.com/apache/fineract/pull/6731)<br>
+Savings interest withholding tax and charge tax were calculated in `double`, so amounts on an exact rounding boundary came out one unit low (5,250 at 1.4 %: **74 → 73**; 187 such amounts between 1 and 1,000,000). Replaced it with exact `BigDecimal` arithmetic rounded once. **5 of 6 new regression cases fail before the fix**; the maintainer re-verified the cases before merging.
+
+[Bug, fix, and verification](./FINERACT_CONTRIBUTIONS.md)
+
 ## Apache ShardingSphere
 
 **7 SQL execution and compatibility improvements · 11 merged PRs**
@@ -37,6 +46,6 @@ Checks execution budgets, data sources, and rewritten SQL; generates Markdown/JS
 
 ---
 
-[All 13 merged upstream PRs across 3 projects](./CONTRIBUTIONS.md) · [Email](mailto:atat9828@naver.com)
+[All 14 merged upstream PRs across 4 projects](./CONTRIBUTIONS.md) · [Email](mailto:atat9828@naver.com)
 
-<sub>Contribution and release status checked: 2026-09-14.</sub>
+<sub>Contribution and release status checked: 2026-10-26.</sub>
