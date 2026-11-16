@@ -1,5 +1,11 @@
 [English](./README.md)
 
+## LLM이 문서에서 뽑은 숫자 확인하기
+
+- [dart-figure-check](https://github.com/ym0506/dart-figure-check): DART 사업보고서 재무 표의 숫자를 표 칸과 DART 공식 재무 데이터로 확인합니다. 개발에 쓰지 않은 20곳에서 120개 계정 중 119개의 정답 행을 찾았습니다. 트레져러의 [opendart-py](https://github.com/TreasurerSquad/opendart-py)를 씁니다.
+- [wonmun-check](https://github.com/ym0506/wonmun-check): 공모전 포털 요약이 주최 측 원문과 다른 곳을 찾습니다. 모델은 근거 문장을 복사해 오기만 하고 판정은 코드가 합니다. 시험용 공고 15건에서 원문과 다른 16칸 중 13칸을 찾았습니다. [데모](https://wonmun-check.vercel.app)
+- [remainder](https://github.com/ym0506/remainder): 가족마다 다른 금액의 PayPal 부분 환불을, 보내는 도중 프로세스가 죽어도 한 번씩만 보냅니다(PayPal 샌드박스 실측).
+
 ## Apache Fineract
 
 **코어뱅킹 · 돈 계산 정확성 · 병합 PR 1건**

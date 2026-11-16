@@ -1,5 +1,11 @@
 [한국어](./README.ko.md)
 
+## Checking numbers that LLMs read from documents
+
+- [dart-figure-check](https://github.com/ym0506/dart-figure-check): figures in Korean DART annual reports, checked against table cells and official DART data. Found the right row for 119 of 120 accounts in 20 filings not used during development. Uses Treasurer's [opendart-py](https://github.com/TreasurerSquad/opendart-py).
+- [wonmun-check](https://github.com/ym0506/wonmun-check): finds where contest portal summaries differ from the organizer's notice. The model only copies evidence sentences; code decides. 13 of 16 differing fields found in a 15-notice test set. [Demo](https://wonmun-check.vercel.app)
+- [remainder](https://github.com/ym0506/remainder): proportional PayPal refunds sent once, even when the sender is killed partway (measured in the PayPal sandbox).
+
 ## Apache Fineract
 
 **Core banking · money correctness · 1 merged PR**
